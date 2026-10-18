@@ -171,7 +171,7 @@ function VerificationWorkspace({ guideTopic }: { guideTopic?: GuideTopic }) {
       <AmbientParticles />
       <a href="#main-content" className="skip-link">{t('মূল বিষয়বস্তুতে যান', 'Skip to main content')}</a>
       <Navbar activeTab={activeTab} onTabChange={changeTab} />
-      <main id="main-content" tabIndex={-1} className={activeTab === 'guide' ? 'scroll-mt-48 flex-1 w-full' : 'scroll-mt-48 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8'}>
+      <main id="main-content" tabIndex={-1} className={activeTab === 'guide' ? 'scroll-mt-24 flex-1 w-full' : 'scroll-mt-24 flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-6 sm:py-8 space-y-8'}>
         {activeTab === 'guide' && (guideTopic
           ? <GuideDetail topic={guideTopic} onTryDemo={() => changeTab('search')} motionPaused={motionPaused} />
           : <BuyerGuide onTryDemo={() => changeTab('search')} motionPaused={motionPaused} onToggleMotion={() => setMotionPaused(previous => !previous)} />)}
@@ -203,7 +203,7 @@ function VerificationWorkspace({ guideTopic }: { guideTopic?: GuideTopic }) {
       <footer className="mt-10 bg-[#12633e] text-[#fffef9]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-9 grid gap-8 md:grid-cols-3">
           <section className="space-y-3" aria-labelledby="footer-project-title">
-            <h2 id="footer-project-title" className="font-bold text-xl">TreeTweet</h2>
+            <h2 id="footer-project-title" className="font-bold text-xl">{t('জমিবার্তা', 'Jomibarta')}</h2>
             <p className="text-sm leading-7">{t('জমি কেনার আগে কাগজ বুঝুন, সঠিক জায়গায় খোঁজ নিন। মালিক, নামজারি, মামলা, খাস ও অধিগ্রহণ—আপনার পাঁচটি প্রথম ধাপ।', 'Understand the papers and know where to ask before buying land. Start with ownership, mutation, cases, khas and acquisition.')}</p>
             <p className="text-sm leading-7">{t('স্বাধীন সহায়ক প্রকল্প। সরকারি ওয়েবসাইট নয়; সরকারি রেকর্ড সরাসরি আনা হয় না।', 'An independent guidance project. This is not a government website and does not retrieve government records.')}</p>
           </section>

@@ -14,7 +14,7 @@ export function generateStaticParams() {
 export async function generateMetadata({ params }: TopicPageProps): Promise<Metadata> {
   const { topic } = await params;
   if (!isGuideTopic(topic)) notFound();
-  const title = `${guideTopicTitles[topic][0]} — TreeTweet`;
+  const title = `${guideTopicTitles[topic][0]} — জমিবার্তা`;
   const description = `${guideTopicTitles[topic][0]}: কী কাগজ দেখবেন ও কোথায় সাহায্য পাবেন। সহজ বাংলা ও ইংরেজিতে স্বাধীন সহায়িকা; সরকারি রেকর্ড সরাসরি যাচাই করা হয় না।`;
   const url = `/check/${topic}`;
   return {
@@ -25,11 +25,11 @@ export async function generateMetadata({ params }: TopicPageProps): Promise<Meta
       type: 'website',
       locale: 'bn_BD',
       alternateLocale: ['en_US'],
-      siteName: 'TreeTweet',
+      siteName: 'জমিবার্তা',
       title,
       description,
       url,
-      images: [{ url: '/social-card.png', width: 1200, height: 630, alt: 'TreeTweet — Check before you buy. Five essential land record checks.' }],
+      images: [{ url: '/social-card.png', width: 1200, height: 630, alt: 'জমিবার্তা / Jomibarta — Check before you buy. Five essential land record checks.' }],
     },
     twitter: { card: 'summary_large_image', title, description, images: ['/social-card.png'] },
   };

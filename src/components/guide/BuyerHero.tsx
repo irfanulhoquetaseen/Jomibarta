@@ -83,7 +83,7 @@ export function BuyerHero({ motionPaused, onToggleMotion, onNavigate }: {
       <Link className="buyer-hero-start" href={current.href} onClick={onNavigate}>
         {t(current.action[0], current.action[1])}<span aria-hidden="true">→</span>
       </Link>
-      <p className="buyer-hero-boundary">{t('TreeTweet একটি স্বাধীন সহায়িকা। সরকারি রেকর্ড এখানে যাচাই করা হয় না।', 'TreeTweet is an independent guide. Government records are not verified here.')}</p>
+      <p className="buyer-hero-boundary">{t('জমিবার্তা একটি স্বাধীন সহায়িকা। সরকারি রেকর্ড এখানে যাচাই করা হয় না।', 'Jomibarta is an independent guide. Government records are not verified here.')}</p>
     </div>
     <figure className="buyer-hero-village-frame" aria-live="off">
       <div className="buyer-hero-village-image">

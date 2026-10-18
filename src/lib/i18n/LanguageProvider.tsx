@@ -24,7 +24,11 @@ export function LanguageProvider({ children, pageTitle }: { children: ReactNode;
   useEffect(() => {
     document.documentElement.lang = language;
   }, [language]);
-  const title = pageTitle ? `${pageTitle[language === 'bn' ? 0 : 1]} — TreeTweet` : language === 'bn' ? 'TreeTweet — জমি কেনার আগে ঝুঁকি যাচাই' : 'TreeTweet — Check land records before buying';
+  const title = pageTitle
+    ? `${pageTitle[language === 'bn' ? 0 : 1]} — ${language === 'bn' ? 'জমিবার্তা' : 'Jomibarta'}`
+    : language === 'bn'
+      ? 'জমিবার্তা — জমি কেনার আগে ঝুঁকি যাচাই'
+      : 'Jomibarta — Check land records before buying';
   return <LanguageContext.Provider value={{ language, setLanguage, t: (bn, en) => language === 'bn' ? bn : en }}><title>{title}</title>{children}</LanguageContext.Provider>;
 }
 export function useLanguage(): LanguageContextValue {

@@ -15,10 +15,10 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website', locale: 'bn_BD', alternateLocale: ['en_US'],
-    url: '/', siteName: 'TreeTweet',
-    title: 'TreeTweet — জমি কেনার আগে ৫টি জরুরি খোঁজ',
+    url: '/', siteName: 'জমিবার্তা',
+    title: 'জমিবার্তা — জমি কেনার আগে ৫টি জরুরি খোঁজ',
     description: 'মালিক, নামজারি, মামলা, খাস ও অধিগ্রহণ: সরকারি সেবা ও সহজ করণীয়। স্বাধীন সহায়ক প্রকল্প; সরাসরি সরকারি রেকর্ড সংযোগ নেই।',
-    images: [{ url: '/social-card.png', width: 1200, height: 630, alt: 'TreeTweet — Check before you buy. Five essential land record checks.' }],
+    images: [{ url: '/social-card.png', width: 1200, height: 630, alt: 'জমিবার্তা / Jomibarta — Check before you buy. Five essential land record checks.' }],
   },
   twitter: { card: 'summary_large_image' },
   icons: { icon: '/icon.svg', apple: '/apple-touch-icon.png' },
