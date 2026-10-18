@@ -7,3 +7,10 @@ artifacts
 .env.*.local
 node_modules
 .next
+tests
+docs
+scripts
+supabase
+*.diff
+*.log
+%TEMP%*
