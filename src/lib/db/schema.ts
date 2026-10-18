@@ -27,6 +27,7 @@ export interface KhatianRecord {
   id: string;
   mouza: string;
   dag_no: string;
+  khatian_no?: string;
   owner_name: string;
   total_area: number;
   remaining_area: number;

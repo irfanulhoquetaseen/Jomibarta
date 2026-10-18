@@ -2,7 +2,7 @@ import { isSupabaseConfigured } from '../db/client';
 import { fetchCompletePlotRecord, fetchDeedByNo } from '../db/queries';
 import { normalizeDagNo, normalizeDeedNo } from '../validation/normalize';
 import { CompletePlotData } from '../db/schema';
-import { getDemoPlotData, getDemoPlotDataByDeed } from '../demo/fixtures';
+import { getDemoPlotData, getDemoPlotDataByDeed, getDemoScenario } from '../demo/fixtures';
 import { getCompletePlotFromRegistry, getCompletePlotByDeedFromRegistry } from '../demo/registry';
 import { runLandVerification } from '../verification/rules';
 import { VerificationResult } from '../verification/types';
@@ -109,6 +109,17 @@ export async function executeLandVerification(params: {
     proposedArea,
     sellerName,
   });
+
+  const scenario = getDemoScenario(demoData.dagNo) || (deedNo ? getDemoScenario(deedNo) : null);
+  if (scenario) {
+    result.scenarioCode = scenario.code;
+    result.scenarioReasonBn = scenario.reasonBn;
+    result.scenarioReasonEn = scenario.reasonEn;
+    result.suggestedStepsBn = scenario.suggestedStepsBn;
+    result.suggestedStepsEn = scenario.suggestedStepsEn;
+    result.disclosureBn = scenario.disclosureBn;
+    result.disclosureEn = scenario.disclosureEn;
+  }
 
   return {
     success: true,

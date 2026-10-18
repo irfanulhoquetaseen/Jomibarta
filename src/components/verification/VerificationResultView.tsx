@@ -37,17 +37,60 @@ export function VerificationResultView({ result, source, onReset }: Verification
   ];
   const dateCopy = (value: string) => /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value)) ? new Date(`${value}T00:00:00Z`).toLocaleDateString(language === 'bn' ? 'bn-BD' : 'en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }) : value;
   return <div className="space-y-5">
-    <div className="flex flex-wrap justify-between items-center gap-3 rounded-2xl border bg-white p-4"><p className="text-base">{t('দাগ', 'Plot')}: <b className="font-mono">{result.dagNo}</b>{selectedDeed && <span className="mt-1 block break-all text-sm">{t('দলিল', 'Deed')}: {selectedDeed.deed_no}</span>}</p><button onClick={onReset} className="rounded-xl border px-4 py-3 text-base">{t('← নতুন অনুসন্ধান', '← New search')}</button></div>
+    <div className="flex flex-wrap justify-between items-center gap-3 rounded-2xl border bg-white p-4">
+      <div className="space-y-1">
+        <div className="flex flex-wrap items-center gap-2">
+          <p className="text-base">{t('দাগ', 'Plot')}: <b className="font-mono">{result.dagNo}</b></p>
+          {khatian?.khatian_no && <p className="text-base text-slate-700">· {t('খতিয়ান', 'Khatian')}: <b className="font-mono">{khatian.khatian_no}</b></p>}
+          <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300">
+            {t('ডেমো ডেটা — কাল্পনিক রেকর্ড', 'Demo Data — Synthetic Record')}
+          </span>
+        </div>
+        {selectedDeed && <span className="block break-all text-sm text-slate-600">{t('দলিল', 'Deed')}: {selectedDeed.deed_no}</span>}
+      </div>
+      <button onClick={onReset} className="rounded-xl border px-4 py-3 text-base hover:bg-slate-50 transition-colors">{t('← নতুন অনুসন্ধান', '← New search')}</button>
+    </div>
     <Card className="overflow-hidden">
       <div className={`${colors} p-5 sm:p-7 text-white space-y-3`}>
-        <p className="text-sm text-white/90">{t('আপনার দেওয়া তথ্যের ফল', 'Result from your supplied information')}</p>
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <p className="text-sm text-white/90">{t('আপনার দেওয়া তথ্যের ফল', 'Result from your supplied information')}</p>
+          <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-white/20 text-white tracking-wide border border-white/30">
+            {t('ডেমো ডেটা — কাল্পনিক রেকর্ড', 'Demo Data — Synthetic Record')}
+          </span>
+        </div>
         <h2 className="text-2xl font-bold leading-snug">{summary}</h2>
         <p className="text-base leading-relaxed">{result.overallStatus === 'RED' ? t('কাগজে সমস্যা বা জরুরি তথ্যের ঘাটতি আছে। মূল কাগজ ও সংশ্লিষ্ট অফিসে না মিলিয়ে টাকা দেবেন না।', 'There is a problem or essential information is missing. Do not pay before checking original papers with the relevant offices.') : t('এই ফল মালিকানার নিশ্চয়তা নয়। টাকা দেওয়ার আগে মূল কাগজ ও অফিসের তথ্য আলাদা করে মিলিয়ে দেখুন।', 'This result does not guarantee ownership. Before paying, independently compare original papers and office records.')}</p>
-        <p className="text-sm text-white/90">{source === 'demo' ? t('শেখার জন্য কাল্পনিক নমুনা — আসল জমির তথ্য নয়', 'Synthetic learning sample — not real land information') : t('অ্যাপের ডাটাবেজের অযাচাইকৃত তথ্য — সরকারি সংযোগ নয়', 'Unverified app database records — no government connection')}</p>
+        <p className="text-sm text-white/90">{source === 'demo' ? t('ডেমো ডেটা — কাল্পনিক রেকর্ড: বিচারক ও ব্যবহারকারীদের বোঝার জন্য তৈরি কাল্পনিক নমুনা, আসল জমির তথ্য নয়', 'Demo Data — Synthetic Record: Fictional learning sample for demonstration, not real land records') : t('অ্যাপের ডাটাবেজের অযাচাইকৃত তথ্য — সরকারি সংযোগ নয়', 'Unverified app database records — no government connection')}</p>
       </div>
       <nav className="flex flex-wrap gap-1 border-b px-3 py-2" aria-label={t('ফলাফলের বিভাগ', 'Result sections')}>{([['overview', t('ফলাফল', 'Result')], ['records', t('কাগজের তথ্য', 'Record details')], ['next-steps', t('এখন কী করবেন', 'What to do next')]] as const).map(([id, label]) => <button key={id} onClick={() => setTab(id)} aria-pressed={tab === id} className={`rounded-lg px-3 py-3 text-base font-semibold ${tab === id ? 'bg-emerald-100 text-emerald-950' : 'text-slate-600'}`}>{label}</button>)}</nav>
       <CardBody className="p-4 sm:p-6 space-y-6">
         {tab === 'overview' && <>
+          {result.scenarioReasonBn && (
+            <section className="rounded-2xl border border-blue-200 bg-blue-50/70 p-4 sm:p-5 space-y-3">
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <span className="inline-block px-2.5 py-0.5 rounded-full text-xs font-bold bg-blue-100 text-blue-900 border border-blue-300">
+                  {t(`কেস ${result.scenarioCode || ''} ডেমো বিশ্লেষণ`, `Case ${result.scenarioCode || ''} Demo Insights`)}
+                </span>
+                <span className="text-xs font-semibold text-blue-800">
+                  {t('ডেমো ডেটা — কাল্পনিক রেকর্ড', 'Demo Data — Synthetic Record')}
+                </span>
+              </div>
+              <div>
+                <h4 className="font-bold text-base text-blue-950 mb-1">{t('ফলাফলের সুনির্দিষ্ট কারণ (বিচারকদের জন্য)', 'Detailed Verification Reason')}</h4>
+                <p className="text-sm leading-relaxed text-blue-900">{t(result.scenarioReasonBn, result.scenarioReasonEn || result.scenarioReasonBn)}</p>
+              </div>
+              {result.suggestedStepsBn && result.suggestedStepsBn.length > 0 && (
+                <div className="pt-2 border-t border-blue-200/60">
+                  <h5 className="font-semibold text-xs uppercase tracking-wider text-blue-900 mb-1.5">{t('প্রস্তাবিত পরবর্তী পদক্ষেপ (Next Steps)', 'Suggested Next Verification Steps')}</h5>
+                  <ul className="list-disc pl-5 space-y-1 text-sm text-blue-950">
+                    {(language === 'bn' ? result.suggestedStepsBn : (result.suggestedStepsEn || result.suggestedStepsBn)).map((step, idx) => (
+                      <li key={idx} className="leading-relaxed">{step}</li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </section>
+          )}
           {result.issues.length > 0 && <section className="space-y-3" aria-labelledby="issues-title"><h3 id="issues-title" className="text-lg font-bold">{t('কী পাওয়া গেছে, কী করবেন', 'What we found and what to do')}</h3>{result.issues.map((issue, index) => {
             const copy = localizeIssue(issue, language);
             return <article key={`${issue.code}-${index}`} className={`rounded-2xl border p-4 space-y-3 ${issue.severity === 'CRITICAL' ? 'border-rose-200 bg-rose-50' : 'border-amber-200 bg-amber-50'}`}>
@@ -57,7 +100,7 @@ export function VerificationResultView({ result, source, onReset }: Verification
           <BuyerChecklist evidence={result} />
         </>}
         {tab === 'records' && <>
-          <section className="space-y-3"><h3 className="text-lg font-bold">{t('খতিয়ানের তথ্য', 'Khatian details')}</h3>{khatian ? <dl className="grid gap-4 rounded-xl bg-slate-50 p-4 text-base sm:grid-cols-2">{[[t('রেকর্ডের মালিক', 'Recorded owner'), khatian.owner_name], [t('মৌজা', 'Mouza'), khatian.mouza], [t('মোট জমি (শতক)', 'Total area (decimal)'), number(khatian.total_area)], [t('অবশিষ্ট জমি (শতক)', 'Remaining area (decimal)'), number(khatian.remaining_area)], [t('জমির ধরন', 'Land category'), khatian.land_type === 'khas' ? t('সরকারি খাস', 'Government khas') : khatian.land_type === 'normal' ? t('সাধারণ জমি', 'Normal land') : t('তথ্য জানা নেই', 'Unknown')], [t('এখনকার নামজারি', 'Current mutation'), mutationCopy(khatian.mutation_status)]].map(([label, value]) => <div key={label}><dt className="text-sm text-slate-600">{label}</dt><dd className="mt-1 font-semibold break-words">{value}</dd></div>)}</dl> : <p className="text-base">{t('খতিয়ানের তথ্য পাওয়া যায়নি।', 'Khatian information is missing.')}</p>}</section>
+          <section className="space-y-3"><h3 className="text-lg font-bold">{t('খতিয়ানের তথ্য', 'Khatian details')}</h3>{khatian ? <dl className="grid gap-4 rounded-xl bg-slate-50 p-4 text-base sm:grid-cols-2">{[[t('রেকর্ডের মালিক', 'Recorded owner'), khatian.owner_name], [t('খতিয়ান নম্বর', 'Khatian number'), khatian.khatian_no || khatian.dag_no], [t('মৌজা', 'Mouza'), khatian.mouza], [t('মোট জমি (শতক)', 'Total area (decimal)'), number(khatian.total_area)], [t('অবশিষ্ট জমি (শতক)', 'Remaining area (decimal)'), number(khatian.remaining_area)], [t('জমির ধরন', 'Land category'), khatian.land_type === 'khas' ? t('সরকারি খাস', 'Government khas') : khatian.land_type === 'normal' ? t('সাধারণ জমি', 'Normal land') : t('তথ্য জানা নেই', 'Unknown')], [t('এখনকার নামজারি', 'Current mutation'), mutationCopy(khatian.mutation_status)]].map(([label, value]) => <div key={label}><dt className="text-sm text-slate-600">{label}</dt><dd className="mt-1 font-semibold break-words">{value}</dd></div>)}</dl> : <p className="text-base">{t('খতিয়ানের তথ্য পাওয়া যায়নি।', 'Khatian information is missing.')}</p>}</section>
           <section className="space-y-3"><h3 className="text-lg font-bold">{t('কখন নামজারির রেকর্ড বদলেছে', 'When the mutation record changed')}</h3>{hasSyntheticHistory && <p className="rounded-xl bg-blue-50 p-3 text-sm leading-relaxed">{t('এখানে শেখার জন্য বানানো নামজারির তারিখ ও ইতিহাস আছে। ডেমো হিসেবে চিহ্নিত তথ্য অফিসের আসল রেকর্ড নয়।', 'This history includes invented dates and events for learning. Entries marked as demo are not official mutation records.')}</p>}{history.length > 0 ? <ol className="space-y-3 border-l-2 border-emerald-200 pl-4">{history.map((entry, index) => <li key={`${entry.reference}-${index}`} className="rounded-xl border p-4 space-y-2"><p className="text-base font-bold"><time dateTime={entry.date}>{dateCopy(entry.date)}</time></p><p className="text-base">{mutationCopy(entry.status)}</p><p className="break-words text-sm text-slate-600">{t('কাগজের নম্বর', 'Document reference')}: {entry.reference}</p></li>)}</ol> : <p className="rounded-xl bg-amber-50 p-4 text-base">{t('আগের নামজারির তথ্য নেই বা ঠিক নেই। ভূমি অফিসে মূল কাগজ দেখুন।', 'Earlier mutation information is missing or invalid. Check the original papers at the land office.')}</p>}</section>
           <section className="space-y-3"><h3 className="text-lg font-bold">{t('মামলা, বন্ধক ও অধিগ্রহণ', 'Court disputes, mortgages and acquisition')}</h3><dl className="space-y-4 rounded-xl border p-4 text-base">{[[t('জমি নিয়ে মামলা', 'Court disputes'), flagCopy(plotStatus?.court_case)], [t('বন্ধক', 'Mortgage'), flagCopy(plotStatus?.mortgaged)], [t('সরকারি অধিগ্রহণ', 'Government acquisition'), acquisitionCopy]].map(([label, value]) => <div key={label}><dt className="text-sm text-slate-600">{label}</dt><dd className="mt-1 font-semibold">{value}</dd></div>)}</dl></section>
           <section className="space-y-3"><h3 className="text-lg font-bold">{t('বিক্রির দলিল', 'Transfer deeds')} ({number(deeds.length)})</h3>{deeds.length === 0 && <p className="text-base">{t('দলিলের তথ্য পাওয়া যায়নি।', 'Deed information is missing.')}</p>}{deeds.map(deed => <article key={deed.id} className="rounded-xl border p-4 space-y-3"><h4 className="font-bold break-all text-base">{deed.deed_no}</h4><p className="text-base">{deed.status === 'active' ? t('চলমান দলিল', 'Active deed') : deed.status === 'cancelled' ? t('বাতিল দলিল', 'Cancelled deed') : t('দলিলের অবস্থা জানা নেই', 'Deed status unknown')}{selectedDeed?.deed_no === deed.deed_no && <> · {t('আপনার বেছে নেওয়া দলিল', 'Your selected deed')}</>}</p><dl className="grid gap-4 text-base sm:grid-cols-2">{[[t('বিক্রেতা', 'Seller'), deed.seller], [t('ক্রেতা', 'Buyer'), deed.buyer], [t('জমি (শতক)', 'Area (decimal)'), number(deed.area)], [t('তারিখ', 'Date'), dateCopy(deed.date)], [t('দাগ', 'Plot'), deed.dag_no]].map(([label, value]) => <div key={label}><dt className="text-sm text-slate-600">{label}</dt><dd className="mt-1 font-semibold break-words">{value}</dd></div>)}</dl></article>)}</section>
@@ -74,6 +117,6 @@ export function VerificationResultView({ result, source, onReset }: Verification
         </details>
       </CardBody>
     </Card>
-    <p className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-base leading-relaxed text-amber-950">{t('এটি সরকারি সনদ বা মালিকানার নিশ্চয়তা নয়। বাস্তব জমি কেনার আগে মূল কাগজ, অফিসের তথ্য ও যোগ্য পেশাদারের পরামর্শ নিন।', 'This is not an official certificate or a guarantee of ownership. Before buying real land, check original papers and office records and seek qualified professional advice.')}</p>
+    <p className="rounded-2xl border border-amber-200 bg-amber-50 p-4 text-base leading-relaxed text-amber-950">{t('সতর্কীকরণ ও ঘোষণা: ডেমো ডেটা — কাল্পনিক রেকর্ড। এটি সরকারের কোনো অফিসিয়াল মালিকানা সনদ নয়। জমি ক্রয়ের পূর্বে মূল দলিলপত্র সংশ্লিষ্ট সহকারী কমিশনার (ভূমি) ও সাব-রেজিস্ট্রি অফিস হতে যাচাই করা আবশ্যক।', 'Notice & Declaration: Demo Data — Synthetic Record. This is not an official government certificate or guarantee of ownership. Before buying real land, independently verify original documents with the relevant AC Land and Sub-Registry offices.')}</p>
   </div>;
 }

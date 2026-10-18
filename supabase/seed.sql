@@ -5,11 +5,11 @@
 -- Seed File: 8 Clearly Labelled Fictional Demo Test Cases (A to H)
 -- =====================================================================
 -- STRICT COMPLIANCE:
--- 1. All records are 100% fictional demo data.
+-- 1. All records are 100% fictional demo data: “ডেমো ডেটা — কাল্পনিক রেকর্ড”.
 -- 2. No real NID, phone numbers, or real government records are used.
--- 3. Dag numbers are strings with preserved leading zeros ('0101', '0202', etc.).
+-- 3. Dag and Khatian numbers are strings with preserved leading zeros ('0101', '0202', etc.).
 -- 4. Reproducible & idempotent (cleans existing demo tables first).
--- 5. Includes P5 buyer evidence schema fields (mutation_history, acquisition_status).
+-- 5. Includes P5 buyer evidence schema fields (mutation_history, acquisition_status, khatian_no).
 -- =====================================================================
 
 -- Clean existing demo records safely
@@ -20,10 +20,11 @@ TRUNCATE TABLE deed, plot_status, khatian CASCADE;
 -- Description: Legitimate transaction. Owner matches deed seller, area within
 -- remaining balance, no mortgage, no court dispute, authentic cryptographic hash.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
+INSERT INTO khatian (id, mouza, dag_no, khatian_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000001',
     'কাল্পনিকপুর',
+    '0101',
     '0101',
     'কাল্পনিক আব্দুর রহমান',
     12.0000,
@@ -61,10 +62,11 @@ VALUES (
 -- Description: Another verified clean record with different mouza and names
 -- proving multi-record consistency.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
+INSERT INTO khatian (id, mouza, dag_no, khatian_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000002',
     'রূপনগর',
+    '0202',
     '0202',
     'কাল্পনিক ফাতেমা বেগম',
     20.0000,
@@ -102,10 +104,11 @@ VALUES (
 -- Description: Minor difference in name spelling/prefix ('মো:' vs 'মোহাম্মদ').
 -- All other checks (area, mortgage, court, hash) are clean.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
+INSERT INTO khatian (id, mouza, dag_no, khatian_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000003',
     'মায়াদ্বীপ',
+    '0303',
     '0303',
     'কাল্পনিক মোহাম্মদ তারেক হাসান',
     15.0000,
@@ -143,10 +146,11 @@ VALUES (
 -- Description: Encumbrance warning. The plot is mortgaged to a bank.
 -- All other checks (names, area, hash) are clean.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
+INSERT INTO khatian (id, mouza, dag_no, khatian_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000004',
     'মেঘনাগাঁও',
+    '0404',
     '0404',
     'কাল্পনিক কামাল উদ্দিন আহমেদ',
     18.0000,
@@ -184,10 +188,11 @@ VALUES (
 -- Description: The same plot (dag 0505) was already sold in full by prior deed
 -- DEED-2024-0005A, but is being sold again in DEED-2024-0005B.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
+INSERT INTO khatian (id, mouza, dag_no, khatian_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000005',
     'পদ্মাপাড়',
+    '0505',
     '0505',
     'কাল্পনিক সেলিম চৌধুরী',
     10.0000,
@@ -241,10 +246,11 @@ VALUES (
 -- Description: The person claiming to sell on the deed ('জাকির হোসেন মজুমদার')
 -- is completely different from the registered Khatian owner ('আবুল মনসুর ভূঁইয়া').
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
+INSERT INTO khatian (id, mouza, dag_no, khatian_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000006',
     'সোনারগাঁ-কল্পিত',
+    '0606',
     '0606',
     'কাল্পনিক আবুল মনসুর ভূঁইয়া',
     14.0000,
@@ -282,10 +288,11 @@ VALUES (
 -- Description: The seller owns remaining 3.0000 decimals, but the deed
 -- attempts to sell 8.0000 decimals.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
+INSERT INTO khatian (id, mouza, dag_no, khatian_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000007',
     'সবুজপল্লী',
+    '0707',
     '0707',
     'কাল্পনিক ফারুক হোসেন',
     10.0000,
@@ -325,10 +332,11 @@ VALUES (
 -- Authentic hash would be: 1a93dd602ad5d1c725ef82bf848ea627d420f720b0e015dda4bbb1a3f04bebc3
 -- Stored hash is deliberately invalid to trigger tamper detection.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
+INSERT INTO khatian (id, mouza, dag_no, khatian_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000008',
     'আনন্দপুর',
+    '0808',
     '0808',
     'কাল্পনিক হারুন অর রশিদ',
     16.0000,

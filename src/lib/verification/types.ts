@@ -29,4 +29,11 @@ export interface VerificationResult {
   selectedDeed: DeedRecord | null;
   timestamp: string;
   disclaimerBn: string;
+  disclosureBn?: string;
+  disclosureEn?: string;
+  scenarioCode?: 'A' | 'B' | 'C' | 'D' | 'E' | 'F' | 'G' | 'H';
+  scenarioReasonBn?: string;
+  scenarioReasonEn?: string;
+  suggestedStepsBn?: string[];
+  suggestedStepsEn?: string[];
 }

@@ -10,6 +10,7 @@
     "typecheck": "tsc --noEmit",
     "seed": "node scripts/seed.mjs",
     "test:cases": "tsx scripts/verify-cases.mjs",
+    "test:scenarios": "tsx tests/scenario-consistency-tests.test.ts",
     "test:unit": "tsx tests/unit-tests.test.ts && tsx tests/phase4-tests.test.ts",
     "test:reliability": "tsx tests/reliability-tests.test.ts",
     "test:p5": "tsx tests/p5-tests.test.ts",
@@ -21,7 +22,7 @@
     "test:topics": "node tests/guide-topics-tests.test.mjs",
     "test:hardening": "tsx tests/hardening-tests.test.ts",
     "verify:submission": "tsx scripts/verify-submission.mjs",
-    "test": "npm run test:cases && npm run test:unit && npm run test:reliability && npm run test:p5 && npm run test:receipts && npm run test:presentation && npm run test:motion && npm run test:hero && npm run test:preparation && npm run test:topics && npm run test:hardening"
+    "test": "npm run test:cases && npm run test:scenarios && npm run test:unit && npm run test:reliability && npm run test:p5 && npm run test:receipts && npm run test:presentation && npm run test:motion && npm run test:hero && npm run test:preparation && npm run test:topics && npm run test:hardening"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.118.0",

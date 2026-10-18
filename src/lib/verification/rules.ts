@@ -4,8 +4,11 @@ import { verifyDeedIntegrity } from './hash';
 import { isISOCalendarDate } from '../validation/date';
 import { VerificationIssue, VerificationResult, VerificationStatus } from './types';
 
+export const SYNTHETIC_DATA_DISCLOSURE_BN = 'ডেমো ডেটা — কাল্পনিক রেকর্ড';
+export const SYNTHETIC_DATA_DISCLOSURE_EN = 'Demo Data — Synthetic Record';
+
 export const MANDATORY_LEGAL_DISCLAIMER_BN =
-  'সতর্কীকরণ ও ঘোষণা: এই অ্যাপ্লিকেশনটি শুধুমাত্র প্রাথমিক যাচাইকরণ ও ঝুঁকি মূল্যায়নের জন্য তৈরি (LandTech Innovation Hackathon 2026)। এটি সরকারের কোনো অফিসিয়াল মালিকানা সনদ নয়। জমি ক্রয়ের পূর্বে মূল দলিলপত্র সংশ্লিষ্ট সহকারী কমিশনার (ভূমি) ও সাব-রেজিস্ট্রি অফিস হতে যাচাই করা আবশ্যক।';
+  'সতর্কীকরণ ও ঘোষণা: ডেমো ডেটা — কাল্পনিক রেকর্ড। এই অ্যাপ্লিকেশনটি শুধুমাত্র প্রাথমিক যাচাইকরণ ও ঝুঁকি মূল্যায়নের জন্য তৈরি (LandTech Innovation Hackathon 2026)। এটি সরকারের কোনো অফিসিয়াল মালিকানা সনদ নয়। জমি ক্রয়ের পূর্বে মূল দলিলপত্র সংশ্লিষ্ট সহকারী কমিশনার (ভূমি) ও সাব-রেজিস্ট্রি অফিস হতে যাচাই করা আবশ্যক।';
 
 /**
  * Rule 1: Checks if Khatian record exists
@@ -435,5 +438,7 @@ export async function runLandVerification(params: {
     selectedDeed,
     timestamp: new Date().toISOString(),
     disclaimerBn: MANDATORY_LEGAL_DISCLAIMER_BN,
+    disclosureBn: SYNTHETIC_DATA_DISCLOSURE_BN,
+    disclosureEn: SYNTHETIC_DATA_DISCLOSURE_EN,
   };
 }

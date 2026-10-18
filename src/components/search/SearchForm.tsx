@@ -50,8 +50,13 @@ export function SearchForm({ onSearch, isLoading, selectedDagNo = '', selectedDe
         <button type="submit" disabled={isLoading} className="w-full rounded-xl bg-emerald-700 px-5 py-3 text-base font-bold text-white disabled:opacity-60">{isLoading ? t('নমুনা দেখা হচ্ছে…', 'Checking the sample…') : t('নমুনার অমিল দেখুন', 'Check the sample')}</button>
       </form>
       <details className="sample-records space-y-3 border-t pt-2">
-        <summary className="min-h-12 cursor-pointer rounded-lg px-1 py-3 text-base font-bold">{t('নমুনা দিয়ে চেষ্টা করুন', 'Try sample records')}</summary>
-        <p className="text-sm leading-relaxed text-slate-600">{t('এই আটটি নমুনা কাল্পনিক। আসল জমির তথ্য নয়।', 'These eight sample records are synthetic, not real land records.')}</p>
+        <summary className="min-h-12 cursor-pointer rounded-lg px-1 py-3 text-base font-bold flex items-center justify-between gap-2">
+          <span>{t('নমুনা দিয়ে চেষ্টা করুন', 'Try sample records')}</span>
+          <span className="text-xs font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300">
+            {t('ডেমো ডেটা — কাল্পনিক রেকর্ড', 'Demo Data — Synthetic Record')}
+          </span>
+        </summary>
+        <p className="text-sm leading-relaxed text-slate-600">{t('এই আটটি নমুনা বিচারক ও ব্যবহারকারীদের যাচাইকরণ প্রবাহ সহজে বোঝার সুবিধার্থে তৈরি ডেমো ডেটা — কাল্পনিক রেকর্ড। এগুলো আসল সরকারি জমির তথ্য নয়।', 'These eight sample records are synthetic demo data for understanding the complete verification workflow. Never presented as authentic government records.')}</p>
         <div className="grid grid-cols-2 gap-2 lg:grid-cols-4">
           {DEMO_SCENARIOS.map(sc => <button type="button" key={sc.code} disabled={isLoading} aria-pressed={dag === sc.dagNo && deed === sc.deedNo} onClick={() => select(sc.dagNo, sc.deedNo)} className={`rounded-2xl border p-3 text-left space-y-1 ${dag === sc.dagNo && deed === sc.deedNo ? 'border-emerald-600 bg-emerald-50' : 'border-slate-200 hover:bg-slate-50'}`}>
             <span className="block font-bold text-sm">{t('কেস', 'Case')} {sc.code} · {sc.dagNo}</span>

@@ -160,6 +160,7 @@ export async function registerSyntheticDeed(
       id: `custom-khatian-${normalizedDag}`,
       mouza,
       dag_no: normalizedDag,
+      khatian_no: normalizedDag,
       owner_name: seller,
       total_area: Number(numericArea.toFixed(4)),
       remaining_area: Number(numericArea.toFixed(4)),
