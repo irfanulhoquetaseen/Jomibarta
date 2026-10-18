@@ -26,8 +26,74 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="bn" className={`${notoSansBengali.variable} font-sans`}>
-      <body className="min-h-screen antialiased font-sans flex flex-col">{children}</body>
+    <html lang="bn" className={`${notoSansBengali.variable} font-sans`} suppressHydrationWarning>
+      <head>
+        <script
+          id="suppress-extension-attrs"
+          dangerouslySetInnerHTML={{
+            __html: `(function(){
+  if (typeof window === 'undefined' || !window.Element) return;
+  var isExtAttr = function(name) {
+    if (!name) return false;
+    return name === 'bis_skin_checked' ||
+           name === 'bis_register' ||
+           name.indexOf('bis_') === 0 ||
+           name.indexOf('__processed_') === 0;
+  };
+  var origSet = Element.prototype.setAttribute;
+  Element.prototype.setAttribute = function(name, value) {
+    if (isExtAttr(name)) return;
+    return origSet.apply(this, arguments);
+  };
+  var cleanTree = function(node) {
+    if (!node || node.nodeType !== 1) return;
+    if (node.getAttributeNames) {
+      var attrs = node.getAttributeNames();
+      for (var i = 0; i < attrs.length; i++) {
+        if (isExtAttr(attrs[i])) {
+          node.removeAttribute(attrs[i]);
+        }
+      }
+    }
+    var children = node.children;
+    if (children) {
+      for (var j = 0; j < children.length; j++) {
+        cleanTree(children[j]);
+      }
+    }
+  };
+  if (document.documentElement) {
+    cleanTree(document.documentElement);
+  }
+  if (window.MutationObserver && document.documentElement) {
+    var observer = new MutationObserver(function(mutations) {
+      for (var m = 0; m < mutations.length; m++) {
+        var mut = mutations[m];
+        if (mut.type === 'attributes' && isExtAttr(mut.attributeName)) {
+          if (mut.target && mut.target.removeAttribute) {
+            mut.target.removeAttribute(mut.attributeName);
+          }
+        } else if (mut.type === 'childList' && mut.addedNodes) {
+          for (var a = 0; a < mut.addedNodes.length; a++) {
+            cleanTree(mut.addedNodes[a]);
+          }
+        }
+      }
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      childList: true,
+      subtree: true,
+      attributeFilter: ['bis_skin_checked', 'bis_register']
+    });
+  }
+})();`,
+          }}
+        />
+      </head>
+      <body className="min-h-screen antialiased font-sans flex flex-col" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }
