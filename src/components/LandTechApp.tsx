@@ -220,6 +220,20 @@ function VerificationWorkspace({ guideTopic }: { guideTopic?: GuideTopic }) {
             <p className="text-sm leading-7">{t('সরকারি ভূমিসেবা হটলাইন। কলের চার্জ প্রযোজ্য হতে পারে।', 'Government land service hotline. Call charges may apply.')}</p>
           </section>
         </div>
+        <section aria-label={t('টিম পরিচিতি', 'Team Credits')} className="border-t border-white/15 px-4 py-5 text-center flex flex-col items-center">
+          <div className="flex flex-wrap items-center justify-center gap-1.5 text-xs text-white/70 mb-3">
+            <span>{t('তৈরি করেছে', 'Developed by')}</span>
+            <span className="font-semibold text-white text-sm">{t('টিম TreeTweet', 'Team TreeTweet')}</span>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3 text-sm">
+            <span className="rounded-full border border-white/25 bg-white/[0.08] px-[14px] py-[6px] text-white leading-tight">
+              {t('ইরফানুল হক তাসিন · টিম লিডার', 'Irfanul Hoque Taseen · Team Leader')}
+            </span>
+            <span className="rounded-full border border-white/25 bg-white/[0.08] px-[14px] py-[6px] text-white leading-tight">
+              {t('আব্দুল্লাহ আলিফ · টিম সদস্য', 'Abdullah Alif · Team Member')}
+            </span>
+          </div>
+        </section>
         <div className="border-t border-white/20 px-4 py-5 text-center text-xs leading-6">
           <p>{t('নমুনা পরীক্ষার তথ্য কাল্পনিক। ডেমো নিবন্ধন এই ব্রাউজারে থাকে; এটি স্থায়ী সরকারি রেকর্ড নয়।', 'Sample checker records are synthetic. Demo receipts stay in this browser and are not permanent government records.')}</p>
         </div>
