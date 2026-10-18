@@ -56,6 +56,7 @@ const khatianRecords = [
     remaining_area: 12.0,
     land_type: 'normal',
     mutation_status: 'done',
+    mutation_history: [{ date: '2023-12-01', status: 'done', reference: 'DEMO-MUT-A' }],
   },
   {
     id: 'a0000000-0000-0000-0000-000000000002',
@@ -66,6 +67,7 @@ const khatianRecords = [
     remaining_area: 15.0,
     land_type: 'normal',
     mutation_status: 'done',
+    mutation_history: [{ date: '2023-12-01', status: 'done', reference: 'DEMO-MUT-B' }],
   },
   {
     id: 'a0000000-0000-0000-0000-000000000003',
@@ -76,6 +78,7 @@ const khatianRecords = [
     remaining_area: 15.0,
     land_type: 'normal',
     mutation_status: 'done',
+    mutation_history: [{ date: '2023-12-01', status: 'done', reference: 'DEMO-MUT-C' }],
   },
   {
     id: 'a0000000-0000-0000-0000-000000000004',
@@ -86,6 +89,7 @@ const khatianRecords = [
     remaining_area: 18.0,
     land_type: 'normal',
     mutation_status: 'done',
+    mutation_history: [{ date: '2023-12-01', status: 'done', reference: 'DEMO-MUT-D' }],
   },
   {
     id: 'a0000000-0000-0000-0000-000000000005',
@@ -96,6 +100,7 @@ const khatianRecords = [
     remaining_area: 10.0,
     land_type: 'normal',
     mutation_status: 'done',
+    mutation_history: [{ date: '2023-12-01', status: 'done', reference: 'DEMO-MUT-E' }],
   },
   {
     id: 'a0000000-0000-0000-0000-000000000006',
@@ -106,6 +111,7 @@ const khatianRecords = [
     remaining_area: 14.0,
     land_type: 'normal',
     mutation_status: 'done',
+    mutation_history: [{ date: '2023-12-01', status: 'done', reference: 'DEMO-MUT-F' }],
   },
   {
     id: 'a0000000-0000-0000-0000-000000000007',
@@ -116,6 +122,7 @@ const khatianRecords = [
     remaining_area: 3.0,
     land_type: 'normal',
     mutation_status: 'done',
+    mutation_history: [{ date: '2023-12-01', status: 'done', reference: 'DEMO-MUT-G' }],
   },
   {
     id: 'a0000000-0000-0000-0000-000000000008',
@@ -126,18 +133,19 @@ const khatianRecords = [
     remaining_area: 16.0,
     land_type: 'normal',
     mutation_status: 'done',
+    mutation_history: [{ date: '2023-12-01', status: 'done', reference: 'DEMO-MUT-H' }],
   },
 ];
 
 const plotStatusRecords = [
-  { dag_no: '0101', mortgaged: false, court_case: false },
-  { dag_no: '0202', mortgaged: false, court_case: false },
-  { dag_no: '0303', mortgaged: false, court_case: false },
-  { dag_no: '0404', mortgaged: true, court_case: false }, // Mortgaged!
-  { dag_no: '0505', mortgaged: false, court_case: false },
-  { dag_no: '0606', mortgaged: false, court_case: false },
-  { dag_no: '0707', mortgaged: false, court_case: false },
-  { dag_no: '0808', mortgaged: false, court_case: false },
+  { dag_no: '0101', mortgaged: false, court_case: false, acquisition_status: 'not_reported' },
+  { dag_no: '0202', mortgaged: false, court_case: false, acquisition_status: 'not_reported' },
+  { dag_no: '0303', mortgaged: false, court_case: false, acquisition_status: 'not_reported' },
+  { dag_no: '0404', mortgaged: true, court_case: false, acquisition_status: 'not_reported' }, // Mortgaged!
+  { dag_no: '0505', mortgaged: false, court_case: false, acquisition_status: 'not_reported' },
+  { dag_no: '0606', mortgaged: false, court_case: false, acquisition_status: 'not_reported' },
+  { dag_no: '0707', mortgaged: false, court_case: false, acquisition_status: 'not_reported' },
+  { dag_no: '0808', mortgaged: false, court_case: false, acquisition_status: 'not_reported' },
 ];
 
 const deedRecords = [

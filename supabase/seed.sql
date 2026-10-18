@@ -9,6 +9,7 @@
 -- 2. No real NID, phone numbers, or real government records are used.
 -- 3. Dag numbers are strings with preserved leading zeros ('0101', '0202', etc.).
 -- 4. Reproducible & idempotent (cleans existing demo tables first).
+-- 5. Includes P5 buyer evidence schema fields (mutation_history, acquisition_status).
 -- =====================================================================
 
 -- Clean existing demo records safely
@@ -19,7 +20,7 @@ TRUNCATE TABLE deed, plot_status, khatian CASCADE;
 -- Description: Legitimate transaction. Owner matches deed seller, area within
 -- remaining balance, no mortgage, no court dispute, authentic cryptographic hash.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status)
+INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000001',
     'কাল্পনিকপুর',
@@ -28,14 +29,16 @@ VALUES (
     12.0000,
     12.0000,
     'normal',
-    'done'
+    'done',
+    '[{"date": "2023-12-01", "status": "done", "reference": "DEMO-MUT-A"}]'::jsonb
 );
 
-INSERT INTO plot_status (dag_no, mortgaged, court_case)
+INSERT INTO plot_status (dag_no, mortgaged, court_case, acquisition_status)
 VALUES (
     '0101',
     FALSE,
-    FALSE
+    FALSE,
+    'not_reported'
 );
 
 INSERT INTO deed (id, deed_no, dag_no, seller, buyer, area, date, hash, prev_hash, status)
@@ -58,7 +61,7 @@ VALUES (
 -- Description: Another verified clean record with different mouza and names
 -- proving multi-record consistency.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status)
+INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000002',
     'রূপনগর',
@@ -67,14 +70,16 @@ VALUES (
     20.0000,
     15.0000,
     'normal',
-    'done'
+    'done',
+    '[{"date": "2023-12-01", "status": "done", "reference": "DEMO-MUT-B"}]'::jsonb
 );
 
-INSERT INTO plot_status (dag_no, mortgaged, court_case)
+INSERT INTO plot_status (dag_no, mortgaged, court_case, acquisition_status)
 VALUES (
     '0202',
     FALSE,
-    FALSE
+    FALSE,
+    'not_reported'
 );
 
 INSERT INTO deed (id, deed_no, dag_no, seller, buyer, area, date, hash, prev_hash, status)
@@ -97,7 +102,7 @@ VALUES (
 -- Description: Minor difference in name spelling/prefix ('মো:' vs 'মোহাম্মদ').
 -- All other checks (area, mortgage, court, hash) are clean.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status)
+INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000003',
     'মায়াদ্বীপ',
@@ -106,14 +111,16 @@ VALUES (
     15.0000,
     15.0000,
     'normal',
-    'done'
+    'done',
+    '[{"date": "2023-12-01", "status": "done", "reference": "DEMO-MUT-C"}]'::jsonb
 );
 
-INSERT INTO plot_status (dag_no, mortgaged, court_case)
+INSERT INTO plot_status (dag_no, mortgaged, court_case, acquisition_status)
 VALUES (
     '0303',
     FALSE,
-    FALSE
+    FALSE,
+    'not_reported'
 );
 
 INSERT INTO deed (id, deed_no, dag_no, seller, buyer, area, date, hash, prev_hash, status)
@@ -136,7 +143,7 @@ VALUES (
 -- Description: Encumbrance warning. The plot is mortgaged to a bank.
 -- All other checks (names, area, hash) are clean.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status)
+INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000004',
     'মেঘনাগাঁও',
@@ -145,14 +152,16 @@ VALUES (
     18.0000,
     18.0000,
     'normal',
-    'done'
+    'done',
+    '[{"date": "2023-12-01", "status": "done", "reference": "DEMO-MUT-D"}]'::jsonb
 );
 
-INSERT INTO plot_status (dag_no, mortgaged, court_case)
+INSERT INTO plot_status (dag_no, mortgaged, court_case, acquisition_status)
 VALUES (
     '0404',
     TRUE,   -- Mortgaged!
-    FALSE
+    FALSE,
+    'not_reported'
 );
 
 INSERT INTO deed (id, deed_no, dag_no, seller, buyer, area, date, hash, prev_hash, status)
@@ -175,7 +184,7 @@ VALUES (
 -- Description: The same plot (dag 0505) was already sold in full by prior deed
 -- DEED-2024-0005A, but is being sold again in DEED-2024-0005B.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status)
+INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000005',
     'পদ্মাপাড়',
@@ -184,14 +193,16 @@ VALUES (
     10.0000,
     10.0000,   -- Remaining area matches proposed deed, isolating double-sale detection
     'normal',
-    'done'
+    'done',
+    '[{"date": "2023-12-01", "status": "done", "reference": "DEMO-MUT-E"}]'::jsonb
 );
 
-INSERT INTO plot_status (dag_no, mortgaged, court_case)
+INSERT INTO plot_status (dag_no, mortgaged, court_case, acquisition_status)
 VALUES (
     '0505',
     FALSE,
-    FALSE
+    FALSE,
+    'not_reported'
 );
 
 -- Prior valid sale of the full plot
@@ -230,7 +241,7 @@ VALUES (
 -- Description: The person claiming to sell on the deed ('জাকির হোসেন মজুমদার')
 -- is completely different from the registered Khatian owner ('আবুল মনসুর ভূঁইয়া').
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status)
+INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000006',
     'সোনারগাঁ-কল্পিত',
@@ -239,14 +250,16 @@ VALUES (
     14.0000,
     14.0000,
     'normal',
-    'done'
+    'done',
+    '[{"date": "2023-12-01", "status": "done", "reference": "DEMO-MUT-F"}]'::jsonb
 );
 
-INSERT INTO plot_status (dag_no, mortgaged, court_case)
+INSERT INTO plot_status (dag_no, mortgaged, court_case, acquisition_status)
 VALUES (
     '0606',
     FALSE,
-    FALSE
+    FALSE,
+    'not_reported'
 );
 
 INSERT INTO deed (id, deed_no, dag_no, seller, buyer, area, date, hash, prev_hash, status)
@@ -269,7 +282,7 @@ VALUES (
 -- Description: The seller owns remaining 3.0000 decimals, but the deed
 -- attempts to sell 8.0000 decimals.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status)
+INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000007',
     'সবুজপল্লী',
@@ -278,14 +291,16 @@ VALUES (
     10.0000,
     3.0000,   -- Only 3.0000 decimals remaining
     'normal',
-    'done'
+    'done',
+    '[{"date": "2023-12-01", "status": "done", "reference": "DEMO-MUT-G"}]'::jsonb
 );
 
-INSERT INTO plot_status (dag_no, mortgaged, court_case)
+INSERT INTO plot_status (dag_no, mortgaged, court_case, acquisition_status)
 VALUES (
     '0707',
     FALSE,
-    FALSE
+    FALSE,
+    'not_reported'
 );
 
 INSERT INTO deed (id, deed_no, dag_no, seller, buyer, area, date, hash, prev_hash, status)
@@ -310,7 +325,7 @@ VALUES (
 -- Authentic hash would be: 1a93dd602ad5d1c725ef82bf848ea627d420f720b0e015dda4bbb1a3f04bebc3
 -- Stored hash is deliberately invalid to trigger tamper detection.
 -- =====================================================================
-INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status)
+INSERT INTO khatian (id, mouza, dag_no, owner_name, total_area, remaining_area, land_type, mutation_status, mutation_history)
 VALUES (
     'a0000000-0000-0000-0000-000000000008',
     'আনন্দপুর',
@@ -319,14 +334,16 @@ VALUES (
     16.0000,
     16.0000,
     'normal',
-    'done'
+    'done',
+    '[{"date": "2023-12-01", "status": "done", "reference": "DEMO-MUT-H"}]'::jsonb
 );
 
-INSERT INTO plot_status (dag_no, mortgaged, court_case)
+INSERT INTO plot_status (dag_no, mortgaged, court_case, acquisition_status)
 VALUES (
     '0808',
     FALSE,
-    FALSE
+    FALSE,
+    'not_reported'
 );
 
 INSERT INTO deed (id, deed_no, dag_no, seller, buyer, area, date, hash, prev_hash, status)
@@ -349,7 +366,17 @@ VALUES (
 UPDATE public.khatian
 SET mutation_history = jsonb_build_array(jsonb_build_object(
   'date', '2023-12-01', 'status', mutation_status,
-  'reference', 'DEMO-MUT-' || dag_no
+  'reference', 'DEMO-MUT-' || CASE id
+    WHEN 'a0000000-0000-0000-0000-000000000001' THEN 'A'
+    WHEN 'a0000000-0000-0000-0000-000000000002' THEN 'B'
+    WHEN 'a0000000-0000-0000-0000-000000000003' THEN 'C'
+    WHEN 'a0000000-0000-0000-0000-000000000004' THEN 'D'
+    WHEN 'a0000000-0000-0000-0000-000000000005' THEN 'E'
+    WHEN 'a0000000-0000-0000-0000-000000000006' THEN 'F'
+    WHEN 'a0000000-0000-0000-0000-000000000007' THEN 'G'
+    WHEN 'a0000000-0000-0000-0000-000000000008' THEN 'H'
+    ELSE dag_no
+  END
 ))
 WHERE id IN (
   'a0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000002',

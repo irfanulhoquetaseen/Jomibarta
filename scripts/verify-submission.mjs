@@ -1,8 +1,9 @@
-import { executeLandVerification } from '../src/lib/services/landService.js';
-import { registerSyntheticDeed, resetCustomRegistry } from '../src/lib/demo/registry.js';
-import { verifyDeedIntegrity } from '../src/lib/verification/hash.js';
-import { DEMO_SCENARIOS } from '../src/lib/demo/fixtures.js';
+import { executeLandVerification } from '../src/lib/services/landService.ts';
+import { registerSyntheticDeed, resetCustomRegistry } from '../src/lib/demo/registry.ts';
+import { verifyDeedIntegrity } from '../src/lib/verification/hash.ts';
+import { DEMO_SCENARIOS } from '../src/lib/demo/fixtures.ts';
 import QRCode from 'qrcode';
+
 
 async function runPreSubmissionAudit() {
   console.log('========================================================');
