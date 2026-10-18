@@ -30,6 +30,52 @@ export function BuyerGuide({ motionPaused, onToggleMotion }: {
   return <div ref={guideRef} className="buyer-guide">
     <BuyerHero motionPaused={motionPaused} onToggleMotion={onToggleMotion} onNavigate={goToSection} />
     <div className="guide-content space-y-6">
+      <section className="rounded-2xl border border-emerald-900/15 bg-white p-5 sm:p-6 shadow-sm space-y-4" data-scroll-reveal aria-labelledby="guide-mission-title">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div>
+            <h2 id="guide-mission-title" className="text-lg sm:text-xl font-extrabold text-emerald-950">
+              {t('জমিবার্তা: সাধারণ মানুষের জন্য জমি যাচাই সহায়িকা', 'Jomibarta: Plain-Language Land Verification Guide')}
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 mt-0.5">
+              {t('জমি কেনার আগে কী জানবেন, কী খুঁজবেন এবং কোন কোন দফতরে যাবেন—তার নিরপেক্ষ পথপ্রদর্শক।', 'An independent guide to what to ask, what to compare, and which offices to visit before buying land.')}
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2 text-xs">
+            <Link href="/check/papers" className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-900 font-bold transition-colors">
+              <span>{t('প্রয়োজনীয় কাগজ দেখি', 'See papers to gather')}</span>
+              <span aria-hidden="true">→</span>
+            </Link>
+            <Link href="/check/preparation" className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-900 font-bold transition-colors">
+              <span>{t('আমার প্রস্তুতি', 'My preparation')}</span>
+              <span aria-hidden="true">→</span>
+            </Link>
+          </div>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-2 text-xs sm:text-sm">
+          <div className="rounded-xl bg-[#f4f8f3] border border-[#d2e4cf] p-4 space-y-2">
+            <h3 className="font-bold text-[#12633e] flex items-center gap-2">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#12633e] text-white text-[11px]" aria-hidden="true">✓</span>
+              <span>{t('জমিবার্তা যা করে', 'What Jomibarta does')}</span>
+            </h3>
+            <ul className="space-y-1.5 pl-6 list-disc text-slate-700 leading-relaxed">
+              <li>{t('জমি কেনার আগে বিক্রেতার কাছে কোন কোন কাগজ চাইতে হবে তা স্পষ্টভাবে জানায়।', 'Explains which documents you must ask the seller for before buying.')}</li>
+              <li>{t('মালিকের পরিচয়, নামজারি, মামলা, খাস ও অধিগ্রহণ—এই ৫টি বিষয় কীভাবে মিলাবেন শেখায়।', 'Teaches how to compare owner identity, mutation, cases, khas, and acquisition.')}</li>
+              <li>{t('কোন তথ্য কোথায় যাচাই করতে হবে (সাব-রেজিস্ট্রি, এসিল্যান্ড অফিস ইত্যাদি) তার পথ দেখায়।', 'Directs you to the correct physical office (Sub-Registry, AC Land) for official searches.')}</li>
+            </ul>
+          </div>
+          <div className="rounded-xl bg-[#fff9f6] border border-[#f0d8cd] p-4 space-y-2">
+            <h3 className="font-bold text-[#975b35] flex items-center gap-2">
+              <span className="flex h-5 w-5 items-center justify-center rounded-full bg-[#975b35] text-white text-[11px]" aria-hidden="true">✕</span>
+              <span>{t('জমিবার্তা যা করে না', 'What Jomibarta does not do')}</span>
+            </h3>
+            <ul className="space-y-1.5 pl-6 list-disc text-slate-700 leading-relaxed">
+              <li>{t('সরকারি সার্ভার থেকে সরাসরি আসল জমির রেকর্ড এনে দেয় না বা চেক করে না।', 'Does not query or retrieve live government records from official databases.')}</li>
+              <li>{t('জমির মালিকানা বা কোনো দলিলকে শতভাগ খাঁটি বলে সার্টিফাই বা প্রত্যয়ন করে না।', 'Does not certify genuine legal title or declare any deed legally authentic.')}</li>
+              <li>{t('অভিজ্ঞ ভূমি আইনজীবী বা সরকারি অফিসের আনুষ্ঠানিক রেকর্ড যাচাইয়ের বিকল্প নয়।', 'Does not replace an experienced land lawyer or certified office record searches.')}</li>
+            </ul>
+          </div>
+        </div>
+      </section>
       <section id="guide-how" tabIndex={-1} className="guide-how guide-destination" data-scroll-reveal aria-labelledby="guide-how-title">
         <h2 id="guide-how-title">{t('যেভাবে ব্যবহার করবেন', 'How to use this guide')}</h2>
         <ol>{[

@@ -280,4 +280,17 @@ main .overflow-x-auto { overscroll-behavior-x: contain; }
   .guide-preparation-track { display: none; }
   .rural-scene, .guide-reading-line { display: none !important; }
   [data-scroll-reveal] { opacity: 1 !important; transform: none !important; }
+  .print-checklist-container {
+    display: block !important;
+    color: #111 !important;
+    background: #fff !important;
+    font-family: system-ui, -apple-system, sans-serif !important;
+  }
+  .print-checklist-container * {
+    color: #111 !important;
+  }
+  .print-checklist-container .break-inside-avoid {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
 }

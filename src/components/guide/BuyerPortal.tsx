@@ -103,7 +103,7 @@ export function BuyerPortal({ onNavigate }: { onNavigate: MouseEventHandler<HTML
       </aside>
     </div>
     <nav className="buyer-portal-quick-links" aria-label={t('কাগজ, প্রস্তুতি ও সাহায্য', 'Papers, preparation and help')}>
-      <Link href="/check/papers">{t('কী কাগজ লাগবে', 'Papers to gather')} <span aria-hidden="true">→</span></Link>
+      <Link href="/check/papers">{t('প্রয়োজনীয় কাগজ দেখি', 'See papers to gather')} <span aria-hidden="true">→</span></Link>
       <Link href="/check/preparation">{t('আমার প্রস্তুতি', 'My preparation')} <span aria-hidden="true">→</span></Link>
       <Link href="/check/help">{t('প্রশ্ন ও সাহায্য', 'Questions and help')} <span aria-hidden="true">→</span></Link>
       <a href="#guide-how" onClick={onNavigate}>{t('কীভাবে দেখব', 'How to use this guide')} <span aria-hidden="true">↑</span></a>

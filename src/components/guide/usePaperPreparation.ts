@@ -7,5 +7,5 @@ const store = createPaperPreparationStore(() => typeof window === 'undefined' ? 
 
 export function usePaperPreparation() {
   const papers = useSyncExternalStore(store.subscribe, store.getSnapshot, store.getServerSnapshot);
-  return { papers, setPaper: store.setPaper, clearPapers: store.clearPapers };
+  return { papers, setPaper: store.setPaper, unmarkPaper: store.unmarkPaper, clearPapers: store.clearPapers };
 }

@@ -45,10 +45,23 @@ export function createPaperPreparationStore(storage: () => PreparationStorage | 
     try { storage()?.setItem(PAPER_PREPARATION_KEY, JSON.stringify(next)); } catch { /* Keep this session's memory fallback. */ }
     publish(next);
   };
+  const unmarkPaper = (id: CheckId) => {
+    if (!IDS.includes(id)) return;
+    initialize();
+    if (!Object.hasOwn(snapshot, id)) return;
+    const next: Partial<Record<CheckId, PaperStatus>> = { ...snapshot };
+    delete next[id];
+    const frozen = Object.keys(next).length === 0 ? EMPTY : Object.freeze(next);
+    try {
+      if (frozen === EMPTY) storage()?.removeItem(PAPER_PREPARATION_KEY);
+      else storage()?.setItem(PAPER_PREPARATION_KEY, JSON.stringify(frozen));
+    } catch { /* Memory fallback */ }
+    publish(frozen);
+  };
   const clearPapers = () => {
     initialize();
     try { storage()?.removeItem(PAPER_PREPARATION_KEY); } catch { /* Memory can still be cleared. */ }
     if (snapshot !== EMPTY) publish(EMPTY);
   };
-  return { getSnapshot, getServerSnapshot, subscribe, setPaper, clearPapers };
+  return { getSnapshot, getServerSnapshot, subscribe, setPaper, unmarkPaper, clearPapers };
 }
